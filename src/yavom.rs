@@ -34,7 +34,7 @@ pub enum OP {
 }
 
 #[derive(PartialEq, Clone, Copy, Debug)]
-pub struct Point(i64, i64);
+pub struct Point(pub i64, pub i64);
 
 #[derive(Debug)]
 pub struct Move<K>(pub OP, pub Point, pub Point, pub Option<Vec<K>>);
