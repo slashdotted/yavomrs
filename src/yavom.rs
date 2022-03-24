@@ -143,10 +143,6 @@ where
         Point(self.m_tl.0 + rel_x, self.m_tl.1 + rel_y)
     }
 
-    /*pub fn point_r(&self, p: &Point) -> Point {
-        Point(self.get_n() - p.0, self.get_m() - p.1)
-    }*/
-
     pub fn rdiagonal(&self, k: i64) -> i64 {
         -k + self.get_n() - self.get_m()
     }
@@ -162,14 +158,6 @@ where
     pub fn br(&self) -> &Point {
         &self.m_br
     }
-
-    /*pub fn a(&self) -> &Vec<K> {
-        &self.m_a
-    }
-
-    pub fn b(&self) -> &Vec<K> {
-        &self.m_b
-    }*/
 }
 
 pub fn apply_move<K>(m: &Move<K>, a: &mut Vec<K>)
@@ -193,7 +181,6 @@ where
             a.drain((*start as usize)..((start + count) as usize));
         }
     }
-    // TODO
 }
 
 fn myers_middle_move<'a, K>(area: &'a Area<K>) -> (Point, Point)
