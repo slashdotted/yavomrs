@@ -45,6 +45,7 @@ mod tests {
 
     #[test]
     pub fn test_simple() {
+        eprint!("Comparing simple strings...");
         let mut a: Vec<String> = vec!["A", "W", "E", "S", "O", "M", "O"]
             .iter()
             .map(|s| s.to_string())
@@ -54,6 +55,7 @@ mod tests {
             .map(|s| s.to_string())
             .collect();
         let moves = crate::yavom::myers(&a, &b);
+        eprint!("{} moves...", moves.len());
         moves.iter().for_each(|m| {
             crate::yavom::apply_move(m, &mut a);
         });
@@ -61,6 +63,35 @@ mod tests {
             eprintln!(" fail!");
         } else {
             eprintln!(" success!");
+        }
+    }
+
+    #[test]
+    pub fn test_huge() {
+        for s in 3..24u32 {
+            let asize = 2i32.pow(s);
+            eprint!("Comparing arrays of size {}...", asize);
+            let mut a: Vec<i64> = Vec::with_capacity(asize as usize);
+            for x in 0..a.capacity() {
+                a.push(x as i64);
+            };
+            let mut b = a.clone();
+            let v = vec![-1,-5,-6];
+            b.reserve(v.len());
+            let mut inspoint = b.split_off((asize/2) as usize);
+            b.extend_from_slice(&v);
+            b.append(&mut inspoint);
+            b.drain(b.len()-3.. b.len()-1);
+            let moves = crate::yavom::myers(&a, &b);
+            eprint!("{} moves...", moves.len());
+            moves.iter().for_each(|m| {
+                crate::yavom::apply_move(m, &mut a);
+            });
+            if a != b {
+                eprintln!(" fail!");
+            } else {
+                eprintln!(" success!");
+            }
         }
     }
 

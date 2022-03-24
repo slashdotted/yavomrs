@@ -214,8 +214,8 @@ where
                 x_fwd = v_fwd[tk(k + 1)];
                 px = x_fwd;
             } else {
-                px = v_fwd[tk(k - 1)];
-                x_fwd = px + 1;
+                x_fwd = v_fwd[tk(k - 1)] + 1;
+                px = x_fwd;
             }
             y_fwd = x_fwd - k;
             // Follow diagonal as long as possible
@@ -255,8 +255,8 @@ where
                 x_bwd = v_bwd[tk(k + 1)];
                 px = x_bwd;
             } else {
-                px = v_bwd[tk(k - 1)];
-                x_bwd = px + 1;
+                x_bwd = v_bwd[tk(k - 1)] + 1;
+                px = x_bwd;
             }
             y_bwd = x_bwd - k;
             // Follow diagonal as long as possible
