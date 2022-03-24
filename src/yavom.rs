@@ -27,17 +27,17 @@
  */
 
 #[derive(PartialEq, Debug)]
-enum OP {
+pub enum OP {
     INSERT,
     DELETE,
     _DELETE,
 }
 
 #[derive(PartialEq, Clone, Copy, Debug)]
-struct Point(i64, i64);
+pub struct Point(i64, i64);
 
 #[derive(Debug)]
-pub struct Move<K>(OP, Point, Point, Option<Vec<K>>);
+pub struct Move<K>(pub OP, pub Point, pub Point, pub Option<Vec<K>>);
 
 struct Area<'a, K>
 where
@@ -387,138 +387,3 @@ where
     })
 }
 
-mod tests {
-    use std::io::BufRead;
-
-    #[allow(dead_code)]
-    fn read_lines<P>(
-        filename: P,
-    ) -> std::io::Result<std::io::Lines<std::io::BufReader<std::fs::File>>>
-    where
-        P: AsRef<std::path::Path>,
-    {
-        let file = std::fs::File::open(filename)?;
-        Ok(std::io::BufReader::new(file).lines())
-    }
-
-    #[test]
-    pub fn test_simple() {
-        let mut a: Vec<String> = vec!["A", "W", "E", "S", "O", "M", "O"]
-            .iter()
-            .map(|s| s.to_string())
-            .collect();
-        let b: Vec<String> = vec!["S", "T", "R", "A", "N", "G", "E", "S", "O", "M", "O"]
-            .iter()
-            .map(|s| s.to_string())
-            .collect();
-        let moves = crate::yavom::myers(&a, &b);
-        moves.iter().for_each(|m| {
-            crate::yavom::apply_move(m, &mut a);
-        });
-        if a != b {
-            eprintln!(" fail!");
-        } else {
-            eprintln!(" success!");
-        }
-    }
-
-    #[test]
-    pub fn test_myers_unfilled_strip() {
-        let base_path = std::path::Path::new("./testdata");
-        let files = [
-            "alpha", "ban", "ben", "beta", "delta", "empty", "first", "gamma", "huge", "huge2",
-            "large1", "large2", "second", "test1", "test2", "third", "x", "y",
-        ];
-        for fa in files {
-            for fb in files {
-                eprint!("Comparing (two steps) {} with {}...", fa, fb);
-                let mut a: Vec<String> = read_lines(base_path.join(fa))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let b: Vec<String> = read_lines(base_path.join(fb))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let mut moves = crate::yavom::myers_unfilled(&a, &b);
-                eprint!("{} moves...", moves.len());
-                crate::yavom::myers_fill(&b, &mut moves);
-                crate::yavom::myers_strip_moves(&mut moves);
-                eprint!(" filled...");
-                moves.iter().for_each(|m| {
-                    crate::yavom::apply_move(m, &mut a);
-                });
-                if a != b {
-                    eprintln!(" fail!");
-                } else {
-                    eprintln!(" success!");
-                }
-            }
-        }
-    }
-
-    #[test]
-    pub fn test_myers_unfilled() {
-        let base_path = std::path::Path::new("./testdata");
-        let files = [
-            "alpha", "ban", "ben", "beta", "delta", "empty", "first", "gamma", "huge", "huge2",
-            "large1", "large2", "second", "test1", "test2", "third", "x", "y",
-        ];
-        for fa in files {
-            for fb in files {
-                eprint!("Comparing (two steps) {} with {}...", fa, fb);
-                let mut a: Vec<String> = read_lines(base_path.join(fa))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let b: Vec<String> = read_lines(base_path.join(fb))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let mut moves = crate::yavom::myers_unfilled(&a, &b);
-                eprint!("{} moves...", moves.len());
-                crate::yavom::myers_fill(&b, &mut moves);
-                eprint!(" filled...");
-                moves.iter().for_each(|m| {
-                    crate::yavom::apply_move(m, &mut a);
-                });
-                if a != b {
-                    eprintln!(" fail!");
-                } else {
-                    eprintln!(" success!");
-                }
-            }
-        }
-    }
-
-    #[test]
-    pub fn test_myers() {
-        let base_path = std::path::Path::new("./testdata");
-        let files = [
-            "alpha", "ban", "ben", "beta", "delta", "empty", "first", "gamma", "huge", "huge2",
-            "large1", "large2", "second", "test1", "test2", "third", "x", "y",
-        ];
-        for fa in files {
-            for fb in files {
-                eprint!("Comparing (two steps) {} with {}...", fa, fb);
-                let mut a: Vec<String> = read_lines(base_path.join(fa))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let b: Vec<String> = read_lines(base_path.join(fb))
-                    .unwrap()
-                    .map(|v| v.unwrap())
-                    .collect();
-                let moves = crate::yavom::myers(&a, &b);
-                moves.iter().for_each(|m| {
-                    crate::yavom::apply_move(m, &mut a);
-                });
-                if a != b {
-                    eprintln!(" fail!");
-                } else {
-                    eprintln!(" success!");
-                }
-            }
-        }
-    }
-}
