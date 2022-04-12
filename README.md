@@ -56,7 +56,6 @@ The *Vec<K>* field stores the values to be inserted. For example:
           yavomrs::yavom::OP::_DELETE => {
               let Point(count, start) = s;
               // TODO Serialize DELETE of count values starting from start
-              patch.push(json!([PATCH_DELETE, count, start]));
           }
       }
   }
