@@ -7,6 +7,6 @@ license = "BSD-3-Clause"
 description = "Yet Another Variation of Myers for generic containers"
 homepage = "https://github.com/slashdotted/yavomrs"
 repository = "https://github.com/slashdotted/yavomrs"
-
+exclude = [ "testdata/*" ]
 
 [dependencies]
