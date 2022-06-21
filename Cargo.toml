@@ -1,6 +1,6 @@
 [package]
 name = "yavomrs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Amos Brocco <amos.brocco@supsi.ch>"]
 license = "BSD-3-Clause"

@@ -43,8 +43,8 @@ struct Area<'a, K>
 where
     K: PartialEq,
 {
-    m_a: &'a Vec<K>,
-    m_b: &'a Vec<K>,
+    m_a: &'a [K],
+    m_b: &'a [K],
     m_tl: Point,
     m_br: Point,
     m_n: i64,
@@ -55,7 +55,7 @@ impl<'a, K> Area<'a, K>
 where
     K: PartialEq,
 {
-    pub fn new_from_container(a: &'a Vec<K>, b: &'a Vec<K>) -> Self {
+    pub fn new_from_container(a: &'a [K], b: &'a [K]) -> Self {
         let mut area = Area {
             m_a: a,
             m_b: b,
@@ -330,7 +330,7 @@ where
     }
 }
 
-pub fn myers<K>(a: &Vec<K>, b: &Vec<K>) -> Vec<Move<K>>
+pub fn myers<K>(a: &[K], b: &[K]) -> Vec<Move<K>>
 where
     K: PartialEq + Clone,
 {
@@ -339,7 +339,7 @@ where
     s
 }
 
-pub fn myers_unfilled<K>(a: &Vec<K>, b: &Vec<K>) -> Vec<Move<K>>
+pub fn myers_unfilled<K>(a: &[K], b: &[K]) -> Vec<Move<K>>
 where
     K: PartialEq,
 {
@@ -349,7 +349,7 @@ where
     s
 }
 
-pub fn myers_fill<K>(b: &Vec<K>, s: &mut Vec<Move<K>>)
+pub fn myers_fill<K>(b: &[K], s: &mut Vec<Move<K>>)
 where
     K: PartialEq + Clone,
 {
@@ -386,4 +386,3 @@ where
         }
     })
 }
-
